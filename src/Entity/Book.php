@@ -17,9 +17,6 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
@@ -41,7 +38,7 @@ class Book
 
     #[ORM\ManyToOne(inversedBy: 'book')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Author $autor = null;
+    private ?Author $author = null;
 
     #[ORM\ManyToOne(inversedBy: 'book')]
     #[ORM\JoinColumn(nullable: false)]
@@ -60,18 +57,6 @@ class Book
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): static
-    {
-        $this->author = $author;
 
         return $this;
     }
@@ -153,14 +138,14 @@ class Book
         return $this;
     }
 
-    public function getAutor(): ?Author
+    public function getAuthor(): ?Author
     {
-        return $this->autor;
+        return $this->author;
     }
 
-    public function setAutor(?Author $autor): static
+    public function setAuthor(?Author $author): static
     {
-        $this->autor = $autor;
+        $this->author = $author;
 
         return $this;
     }
