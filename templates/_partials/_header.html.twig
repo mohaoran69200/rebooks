@@ -2,32 +2,47 @@
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
         <!-- Logo -->
         <a href="{{ path('home') }}" class="text-2xl font-bold text-blue-500">
-            📖 ReBooks
+            ReBooks
         </a>
 
-        <!-- Navigation -->
-        <nav class="hidden md:flex space-x-6">
-            <a href="#" class="text-gray-900 hover:text-blue-500">Accueil</a>
-            <a href="#" class="text-gray-900 hover:text-blue-500">Catégories</a>
-            <a href="#" class="text-gray-900 hover:text-blue-500">À propos</a>
-        </nav>
-
-        <!-- Actions -->
-        <div class="flex items-center space-x-4">
-            <!-- Champ de recherche -->
-            <div class="relative">
-                <label>
-                    <input type="text" placeholder="Rechercher..."
-                           class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200">
-                </label>
-                <button class="absolute right-2 top-2 text-gray-500">
-                    🔍
+        <!-- Barre de recherche centrée -->
+        <div class="flex-1 mx-6">
+            <div class="relative w-full max-w-lg mx-auto">
+                <input type="text" placeholder="Rechercher..."
+                       class="w-full border border-gray-300 rounded-full px-6 py-3 pr-12 focus:outline-none focus:ring
+                        focus:ring-blue-200">
+                <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-500">
+                    <!-- Icône de loupe (recherche) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M21 21l-4.35-4.35m0 0A8.5 8.5 0 1010.5 19a8.5 8.5 0 006.15-2.65z"/>
+                    </svg>
                 </button>
             </div>
+        </div>
 
-            <!-- Bouton Connexion / Profil -->
-            <a href="{{ path('app_login') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
-                Connexion
+        <!-- Icônes d'actions (Compte et Panier) -->
+        <div class="flex items-center space-x-6">
+            <!-- Compte -->
+            <a href="{{ path('app_login') }}" class="text-gray-600 hover:text-blue-500">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                      stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"
+                      class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                </svg>
+            </a>
+
+            <!-- Panier -->
+            <a href="#" class="text-gray-600 hover:text-blue-500">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                      stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"
+                      class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" />
+                    <path d="M6 5l14 1l-1 7h-13" />
+                </svg>
             </a>
         </div>
     </div>

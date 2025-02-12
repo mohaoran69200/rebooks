@@ -3,53 +3,56 @@
 {% block title %}Accueil | ReBooks{% endblock %}
 
 {% block body %}
-{#    <!-- HERO SECTION -->#}
-{#    <section class="bg-blue-500 text-white text-center py-20">#}
-{#        <div class="container mx-auto px-6">#}
-{#            <h1 class="text-4xl font-bold">Trouvez, achetez et vendez des livres d'occasion facilement 📚</h1>#}
-{#            <p class="mt-4 text-lg">Des milliers de livres disponibles à des prix abordables.</p>#}
-{#            <a href="{{ path('categories') }}" class="mt-6 inline-block bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">#}
-{#                Explorer les livres#}
-{#            </a>#}
-{#        </div>#}
-{#    </section>#}
+    <!-- HERO SECTION -->
+    <section class="bg-blue-500 text-white text-center py-20">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl font-bold">Trouvez, achetez et vendez des livres d'occasion facilement </h1>
+            <p class="mt-4 text-lg">Des milliers de livres disponibles à des prix abordables.</p>
+            <a href="#" class="mt-6 inline-block bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
+                Explorer les livres
+            </a>
+            <div class="mt-8">
+                <img src="{{ asset('images/Bibliophile-rafiki.svg') }}" alt="Rebooks illustration" class="mx-auto w-96 h-auto">
+            </div>
+        </div>
+    </section>
 
-{#    <!-- CATÉGORIES -->#}
-{#    <section class="container mx-auto px-6 py-12">#}
-{#        <h2 class="text-2xl font-bold text-gray-900 text-center">Catégories populaires</h2>#}
-{#        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">#}
-{#            {% for category in categories %}#}
-{#                <a href="{{ path('category_books', { id: category.id }) }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">#}
-{#                    <h3 class="text-xl font-semibold text-gray-800">{{ category.name }}</h3>#}
-{#                </a>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </section>#}
+    {#    <!-- CATÉGORIES -->#}
+    {#    <section class="container mx-auto px-6 py-12">#}
+    {#        <h2 class="text-2xl font-bold text-gray-900 text-center">Catégories populaires</h2>#}
+    {#        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">#}
+    {#            {% for category in categories %}#}
+    {#                <a href="{{ path('category_books', { id: category.id }) }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">#}
+    {#                    <h3 class="text-xl font-semibold text-gray-800">{{ category.name }}</h3>#}
+    {#                </a>#}
+    {#            {% endfor %}#}
+    {#        </div>#}
+    {#    </section>#}
 
-{#    <!-- DERNIERS LIVRES -->#}
-{#    <section class="container mx-auto px-6 py-12">#}
-{#        <h2 class="text-2xl font-bold text-gray-900 text-center">Derniers ajouts</h2>#}
-{#        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">#}
-{#            {% for book in books %}#}
-{#                <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">#}
-{#                    <img src="{{ asset(book.image) }}" alt="{{ book.title }}" class="w-full h-48 object-cover rounded">#}
-{#                    <h3 class="mt-2 text-lg font-semibold text-gray-900">{{ book.title }}</h3>#}
-{#                    <p class="text-gray-700">Auteur : {{ book.author.name }}</p>#}
-{#                    <p class="text-green-600 font-bold mt-1">{{ book.price }} €</p>#}
-{#                    <a href="{{ path('book_show', { id: book.id }) }}" class="block mt-3 bg-blue-500 text-white text-center py-2 rounded-lg hover:bg-blue-600">#}
-{#                        Voir le livre#}
-{#                    </a>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </section>#}
+    {#    <!-- DERNIERS LIVRES -->#}
+    {#    <section class="container mx-auto px-6 py-12">#}
+    {#        <h2 class="text-2xl font-bold text-gray-900 text-center">Derniers ajouts</h2>#}
+    {#        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">#}
+    {#            {% for book in books %}#}
+    {#                <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">#}
+    {#                    <img src="{{ asset(book.image) }}" alt="{{ book.title }}" class="w-full h-48 object-cover rounded">#}
+    {#                    <h3 class="mt-2 text-lg font-semibold text-gray-900">{{ book.title }}</h3>#}
+    {#                    <p class="text-gray-700">Auteur : {{ book.author.name }}</p>#}
+    {#                    <p class="text-green-600 font-bold mt-1">{{ book.price }} €</p>#}
+    {#                    <a href="{{ path('book_show', { id: book.id }) }}" class="block mt-3 bg-blue-500 text-white text-center py-2 rounded-lg hover:bg-blue-600">#}
+    {#                        Voir le livre#}
+    {#                    </a>#}
+    {#                </div>#}
+    {#            {% endfor %}#}
+    {#        </div>#}
+    {#    </section>#}
 
-{#    <!-- CTA VENDEURS -->#}
-{#    <section class="bg-gray-100 py-12 text-center">#}
-{#        <h2 class="text-2xl font-bold text-gray-900">Vendez vos livres en quelques clics !</h2>#}
-{#        <p class="mt-2 text-gray-700">Mettez en vente vos livres inutilisés et gagnez de l'argent facilement.</p>#}
-{#        <a href="{{ path('book_add') }}" class="mt-4 inline-block bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600">#}
-{#            Ajouter un livre#}
-{#        </a>#}
-{#    </section>#}
+    {#    <!-- CTA VENDEURS -->#}
+    {#    <section class="bg-gray-100 py-12 text-center">#}
+    {#        <h2 class="text-2xl font-bold text-gray-900">Vendez vos livres en quelques clics !</h2>#}
+    {#        <p class="mt-2 text-gray-700">Mettez en vente vos livres inutilisés et gagnez de l'argent facilement.</p>#}
+    {#        <a href="{{ path('book_add') }}" class="mt-4 inline-block bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600">#}
+    {#            Ajouter un livre#}
+    {#        </a>#}
+    {#    </section>#}
 {% endblock %}

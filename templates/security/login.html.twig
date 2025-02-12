@@ -1,46 +1,87 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="min-h-screen flex items-center justify-center bg-gray-100">
+        <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se deconnecter</a>
+            <!-- Affichage d'une erreur -->
+            {% if error %}
+                <div class="mb-4 text-red-600 bg-red-100 p-3 rounded-lg">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            <!-- Message si déjà connecté -->
+            {% if app.user %}
+                <div class="mb-3 text-center text-gray-700">
+                    Vous êtes connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>.
+                    <a href="{{ path('app_logout') }}" class="text-blue-500 hover:underline">Se déconnecter</a>
+                </div>
+            {% endif %}
+
+            <h1 class="text-xl font-bold text-center text-gray-800 mb-6">Veuillez vous connecter</h1>
+
+            <!-- Formulaire de connexion -->
+            <form method="post" class="space-y-4">
+                <div>
+                    <label for="username" class="block text-gray-700 font-semibold">Email :</label>
+                    <input type="email" value="{{ last_username }}" name="_username" id="username"
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                           autocomplete="email" required autofocus>
+                </div>
+
+                <div class="relative">
+                    <label for="password" class="block text-gray-700 font-semibold">Mot de passe :</label>
+                    <input type="password" name="_password" id="password"
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                           autocomplete="current-password" required>
+
+                    <!-- Icône pour afficher/masquer le mot de passe -->
+                    <button type="button" id="toggle-password" class="absolute right-3 top-9 text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" id="eye-icon" class="h-5 w-5" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 4.5c-7.333 0-11 7.5-11 7.5s3.667 7.5 11 7.5 11-7.5 11-7.5-3.667-7.5-11-7.5z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button type="submit"
+                        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+                    Se connecter
+                </button>
+            </form>
+
+            <!-- Lien vers l'inscription -->
+            <div class="mt-4 text-center">
+                <p class="text-gray-600">Vous n'avez pas de compte ?</p>
+                <a href="{{ path('app_register') }}"
+                   class="text-blue-500 hover:underline">
+                    Inscrivez-vous ici
+                </a>
             </div>
-        {% endif %}
+        </div>
+    </div>
 
-        <h1 class="h3 mb-3 font-weight-normal">Veuillez vous connecter</h1>
-        <label for="username">Email:</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">Mot de passe</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+    <!-- Script pour afficher/masquer le mot de passe -->
+    <script>
+        document.getElementById('toggle-password').addEventListener('click', function () {
+            let passwordField = document.getElementById('password');
+            let eyeIcon = document.getElementById('eye-icon');
 
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
-
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
-            </div>
-        #}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-           Se connecter
-        </button>
-
-    </form>
-
-    <a href="{{ path('app_register') }}" class="btn btn-lg btn-primary">
-        Si vous n'avez pas de compte inscrivez-vous
-    </a>
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.innerHTML = '<path d="M12 4.5c-7.333 0-11 7.5-11 7.5s3.667 7.5 11 7.5 11-7.5 11-7.5-3.667-7.5-11-7.5z"/>' +
+                    '<circle cx="12" cy="12" r="3"/><line x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="2" />';
+            } else {
+                passwordField.type = "password";
+                eyeIcon.innerHTML = '<path d="M12 4.5c-7.333 0-11 7.5-11 7.5s3.667 7.5 11 7.5 11-7.5 11-7.5-3.667-7.5-11-7.5z"/>' +
+                    '<circle cx="12" cy="12" r="3"/>';
+            }
+        });
+    </script>
 {% endblock %}
