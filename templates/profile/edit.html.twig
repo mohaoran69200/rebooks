@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="bg-gray-100 py-10">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-bold mb-4">Modifier le profil</h2>
+
+            {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+
+            <div>
+                {{ form_label(form.username, 'Pseudo', {'label_attr': {'class': 'block text-gray-700'}}) }}
+                {{ form_widget(form.username, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.firstName, 'Prénom', {'label_attr': {'class': 'block text-gray-700'}}) }}
+                {{ form_widget(form.firstName, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.lastName, 'Nom', {'label_attr': {'class': 'block text-gray-700'}}) }}
+                {{ form_widget(form.lastName, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.phoneNumber, 'Numéro de téléphone', {'label_attr': {'class': 'block text-gray-700'}}) }}
+                {{ form_widget(form.phoneNumber, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+            </div>
+
+            <h2 class="text-2xl font-bold mb-4">Ses adresses :</h2>
+            <ul class="space-y-4">
+                {% for addressForm in form.addresses %}
+                    <li class="border border-gray-300 p-4 rounded-lg shadow-sm bg-white">
+                        <div>
+                            {{ form_label(addressForm.street, 'Rue', {'label_attr': {'class': 'block text-gray-700'}}) }}
+                            {{ form_widget(addressForm.street, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+                        </div>
+                        <div>
+                            {{ form_label(addressForm.city, 'Ville', {'label_attr': {'class': 'block text-gray-700'}}) }}
+                            {{ form_widget(addressForm.city, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+                        </div>
+                        <div>
+                            {{ form_label(addressForm.postalCode, 'Code Postal', {'label_attr': {'class': 'block text-gray-700'}}) }}
+                            {{ form_widget(addressForm.postalCode, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+                        </div>
+                        <div>
+                            {{ form_label(addressForm.country, 'Pays', {'label_attr': {'class': 'block text-gray-700'}}) }}
+                            {{ form_widget(addressForm.country, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+                        </div>
+                        <div>
+                            {{ form_widget(addressForm._delete, {'attr': {'class': 'mt-2 text-red-500 hover:underline'}}) }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="mt-4">
+                <button type="button" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md"
+                        onclick="addAddress(event)">
+                    Ajouter une adresse
+                </button>
+            </div>
+
+            <div class="mt-6">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
+                    Enregistrer les modifications
+                </button>
+                <a href="{{ path('app_profile_view') }}" class="ml-4 text-gray-600 hover:underline">
+                    Annuler
+                </a>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </section>
+
+    <script>
+        function addAddress(event) {
+            event.preventDefault();
+
+            const list = document.querySelector('ul.space-y-4');
+            const prototype = list.dataset.prototype;
+            const index = list.children.length;
+            const newForm = prototype.replace(/__name__/g, index);
+
+            const newElement = document.createElement('li');
+            newElement.classList.add('border', 'border-gray-300', 'p-4', 'rounded-lg', 'shadow-sm', 'bg-white');
+            newElement.innerHTML = newForm;
+
+            list.appendChild(newElement);
+        }
+    </script>
+{% endblock %}
