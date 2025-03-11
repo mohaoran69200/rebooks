@@ -67,21 +67,4 @@
         </div>
     </div>
 
-    <!-- Script pour afficher/masquer le mot de passe -->
-    <script>
-        document.getElementById('toggle-password').addEventListener('click', function () {
-            let passwordField = document.getElementById('password');
-            let eyeIcon = document.getElementById('eye-icon');
-
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                eyeIcon.innerHTML = '<path d="M12 4.5c-7.333 0-11 7.5-11 7.5s3.667 7.5 11 7.5 11-7.5 11-7.5-3.667-7.5-11-7.5z"/>' +
-                    '<circle cx="12" cy="12" r="3"/><line x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="2" />';
-            } else {
-                passwordField.type = "password";
-                eyeIcon.innerHTML = '<path d="M12 4.5c-7.333 0-11 7.5-11 7.5s3.667 7.5 11 7.5 11-7.5 11-7.5-3.667-7.5-11-7.5z"/>' +
-                    '<circle cx="12" cy="12" r="3"/>';
-            }
-        });
-    </script>
 {% endblock %}
