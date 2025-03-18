@@ -1,93 +1,94 @@
 {% extends 'base.html.twig' %}
 
+{% block importmap %}
+    {{ importmap(['app', 'address', 'addressApi', 'dropdown']) }}
+{% endblock %}
+
 {% block body %}
     <section class="bg-gray-100 py-10">
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
-            <h2 class="text-2xl font-bold mb-4">Modifier le profil</h2>
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Modifier le profil</h2>
 
-            {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+            {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
 
             <div>
-                {{ form_label(form.username, 'Pseudo', {'label_attr': {'class': 'block text-gray-700'}}) }}
-                {{ form_widget(form.username, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+                {{ form_label(form.username, 'Pseudo', {'label_attr': {'class': 'block text-gray-700 font-semibold'}}) }}
+                {{ form_widget(form.username, {'attr': {'class': 'w-full mt-1 p-3 border rounded-lg focus:ring focus:ring-blue-300'}}) }}
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    {{ form_label(form.firstName, 'Prénom', {'label_attr': {'class': 'block text-gray-700 font-semibold'}}) }}
+                    {{ form_widget(form.firstName, {'attr': {'class': 'w-full mt-1 p-3 border rounded-lg focus:ring focus:ring-blue-300'}}) }}
+                </div>
+
+                <div>
+                    {{ form_label(form.lastName, 'Nom', {'label_attr': {'class': 'block text-gray-700 font-semibold'}}) }}
+                    {{ form_widget(form.lastName, {'attr': {'class': 'w-full mt-1 p-3 border rounded-lg focus:ring focus:ring-blue-300'}}) }}
+                </div>
             </div>
 
             <div>
-                {{ form_label(form.firstName, 'Prénom', {'label_attr': {'class': 'block text-gray-700'}}) }}
-                {{ form_widget(form.firstName, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+                {{ form_label(form.phoneNumber, 'Numéro de téléphone', {'label_attr': {'class': 'block text-gray-700 font-semibold'}}) }}
+                {{ form_widget(form.phoneNumber, {'attr': {'class': 'w-full mt-1 p-3 border rounded-lg focus:ring focus:ring-blue-300'}}) }}
             </div>
 
-            <div>
-                {{ form_label(form.lastName, 'Nom', {'label_attr': {'class': 'block text-gray-700'}}) }}
-                {{ form_widget(form.lastName, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
-            </div>
-
-            <div>
-                {{ form_label(form.phoneNumber, 'Numéro de téléphone', {'label_attr': {'class': 'block text-gray-700'}}) }}
-                {{ form_widget(form.phoneNumber, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
-            </div>
-
-            <h2 class="text-2xl font-bold mb-4">Ses adresses :</h2>
-            <ul class="space-y-4">
+            <h2 class="text-2xl font-bold mt-8 text-gray-800">Modifier les adresses</h2>
+            <ul class="space-y-6" data-prototype="{{ form_widget(form.addresses.vars.prototype)|e('html_attr') }}">
                 {% for addressForm in form.addresses %}
-                    <li class="border border-gray-300 p-4 rounded-lg shadow-sm bg-white">
-                        <div>
-                            {{ form_label(addressForm.street, 'Rue', {'label_attr': {'class': 'block text-gray-700'}}) }}
-                            {{ form_widget(addressForm.street, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+                    <li class="border border-gray-300 p-6 rounded-lg shadow-md bg-white relative">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Adresse {{ loop.index }}</h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                {{ form_label(addressForm.street, 'Rue', {'label_attr': {'class': 'block text-gray-700 font-semibold'}}) }}
+                                {{ form_widget(addressForm.street, {'attr': {'class': 'w-full mt-1 p-3 border rounded-lg focus:ring focus:ring-blue-300 address-autocomplete', 'data-action': 'address-input'}}) }}
+                            </div>
+                            <div>
+                                {{ form_label(addressForm.city, 'Ville', {'label_attr': {'class': 'block text-gray-700 font-semibold'}}) }}
+                                {{ form_widget(addressForm.city, {'attr': {'class': 'w-full mt-1 p-3 border rounded-lg focus:ring focus:ring-blue-300 address-autocomplete', 'data-action': 'address-input'}}) }}
+                            </div>
                         </div>
-                        <div>
-                            {{ form_label(addressForm.city, 'Ville', {'label_attr': {'class': 'block text-gray-700'}}) }}
-                            {{ form_widget(addressForm.city, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
+
+                        <div class="grid grid-cols-2 gap-6 mt-4">
+                            <div>
+                                {{ form_label(addressForm.postalCode, 'Code Postal', {'label_attr': {'class': 'block text-gray-700 font-semibold'}}) }}
+                                {{ form_widget(addressForm.postalCode, {'attr': {'class': 'w-full mt-1 p-3 border rounded-lg focus:ring focus:ring-blue-300', 'data-action': 'address-input'}}) }}
+                            </div>
+                            <div>
+                                {{ form_label(addressForm.country, 'Pays', {'label_attr': {'class': 'block text-gray-700 font-semibold'}}) }}
+                                {{ form_widget(addressForm.country, {'attr': {'class': 'w-full mt-1 p-3 border rounded-lg focus:ring focus:ring-blue-300', 'data-action': 'address-input'}}) }}
+                            </div>
                         </div>
-                        <div>
-                            {{ form_label(addressForm.postalCode, 'Code Postal', {'label_attr': {'class': 'block text-gray-700'}}) }}
-                            {{ form_widget(addressForm.postalCode, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
-                        </div>
-                        <div>
-                            {{ form_label(addressForm.country, 'Pays', {'label_attr': {'class': 'block text-gray-700'}}) }}
-                            {{ form_widget(addressForm.country, {'attr': {'class': 'w-full mt-1 p-2 border rounded-md'}}) }}
-                        </div>
-                        <div>
-                            {{ form_widget(addressForm._delete, {'attr': {'class': 'mt-2 text-red-500 hover:underline'}}) }}
-                        </div>
+
+                        <button type="button" class="absolute top-3 right-3 text-red-600 hover:text-red-800 cursor-pointer font-semibold delete-address">✖</button>
                     </li>
                 {% endfor %}
             </ul>
 
-            <div class="mt-4">
-                <button type="button" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md"
+            <div class="mt-6">
+                <button type="button" class="bg-green-500 hover:bg-green-600 text-white py-3 px-5 rounded-lg font-semibold"
                         onclick="addAddress(event)">
                     Ajouter une adresse
                 </button>
             </div>
 
-            <div class="mt-6">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
+            <div class="mt-6 flex justify-between items-center">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-5 rounded-lg font-semibold">
                     Enregistrer les modifications
                 </button>
-                <a href="{{ path('app_profile_view') }}" class="ml-4 text-gray-600 hover:underline">
+                <a href="{{ path('app_profile_view') }}" class="text-gray-600 hover:underline font-semibold">
                     Annuler
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <a href="{{ path('app_profile_change_password') }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+                    Modifier le mot de passe
                 </a>
             </div>
 
             {{ form_end(form) }}
         </div>
     </section>
-
-    <script>
-        function addAddress(event) {
-            event.preventDefault();
-
-            const list = document.querySelector('ul.space-y-4');
-            const prototype = list.dataset.prototype;
-            const index = list.children.length;
-            const newForm = prototype.replace(/__name__/g, index);
-
-            const newElement = document.createElement('li');
-            newElement.classList.add('border', 'border-gray-300', 'p-4', 'rounded-lg', 'shadow-sm', 'bg-white');
-            newElement.innerHTML = newForm;
-
-            list.appendChild(newElement);
-        }
-    </script>
 {% endblock %}

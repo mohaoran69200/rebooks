@@ -24,6 +24,14 @@ return [
         'path' => './assets/js/togglePassword.js',
         'entrypoint' => true,
     ],
+    'addressApi' => [
+        'path' => './assets/js/Address/addressAutoComplete.js',
+        'entrypoint' => true,
+    ],
+    'address' => [
+        'path' => './assets/js/Address/manageAddress.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

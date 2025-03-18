@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class UserProfileService
 {
@@ -17,10 +18,10 @@ class UserProfileService
         $this->passwordHasher = $passwordHasher;
     }
 
-    public function getUserBooks(User $user): array
-    {
-        return $this->em->getRepository('App:Book')->findBy(['user' => $user]);
-    }
+//    public function getUserBooks(User $user): array
+//    {
+//        return $this->em->getRepository('App:Book')->findBy(['user' => $user]);
+//    }
 
     public function updateProfile(User $user): void
     {
@@ -28,11 +29,16 @@ class UserProfileService
         $this->em->flush();
     }
 
-    public function changePassword(User $user, array $data): void
+    public function changePassword(User $user, string $oldPassword, string $newPassword): bool
     {
-        $user->setPassword($this->passwordHasher->hashPassword($user, $data['newPassword']));
-        $this->em->persist($user);
-        $this->em->flush();
+        if (!$this->passwordHasher->isPasswordValid($user, $oldPassword)) {
+            return false;
+        }
+
+        $hashedPassword = $this->passwordHasher->hashPassword($user, $newPassword);
+        $user->setPassword($hashedPassword);
+
+        return true;
     }
 
     public function deleteAccount(User $user): void
