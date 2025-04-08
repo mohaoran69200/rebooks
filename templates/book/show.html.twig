@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
+            <h1 class="text-3xl font-bold text-gray-900">{{ book.title }}</h1>
+            <p class="text-gray-500 mt-2">Auteur : <span class="font-semibold">{{ book.authorName }}</span></p>
+            <p class="text-gray-600 mt-4">{{ book.description }}</p>
+            <p class="text-lg font-bold text-gray-800 mt-4">Prix : {{ book.price }} €</p>
+            <p class="text-sm text-gray-500 mt-1">Catégorie : {{ book.category.name }}</p>
+
+            <a href="{{ path('book_list') }}"
+               class="mt-6 inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                Retour à la liste
+            </a>
+
+            {% if app.user and app.user == book.user %}
+                <!-- Bouton Modifier -->
+                <a href="{{ path('book_edit', {'id': book.id}) }}"
+                   class="mt-4 inline-block bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition">
+                    Modifier
+                </a>
+
+                <!-- Formulaire de suppression -->
+                <form action="{{ path('book_remove', {'id': book.id}) }}" method="POST" class="mt-4">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ book.id) }}">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+                        Supprimer
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -24,11 +24,11 @@ class UserProfileController extends AbstractController
     public function viewProfile(UserProfileService $profileService): Response
     {
         $user = $this->getUser();
-//        $books = $profileService->getUserBooks($user);
+        $books = $profileService->getUserBooks($user);
 
         return $this->render('profile/view.html.twig', [
             'user' => $user,
-//            'books' => $books
+            'books' => $books
         ]);
     }
 

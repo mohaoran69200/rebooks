@@ -18,10 +18,10 @@ class UserProfileService
         $this->passwordHasher = $passwordHasher;
     }
 
-//    public function getUserBooks(User $user): array
-//    {
-//        return $this->em->getRepository('App:Book')->findBy(['user' => $user]);
-//    }
+    public function getUserBooks(User $user): array
+    {
+        return $this->em->getRepository('App:Book')->findBy(['user' => $user]);
+    }
 
     public function updateProfile(User $user): void
     {

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,22 +24,21 @@ class Book
     #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\OneToOne(inversedBy: 'book', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'book', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToOne(mappedBy: 'book', cascade: ['persist', 'remove'])]
     private ?OrderLine $orderLine = null;
 
-    #[ORM\ManyToOne(inversedBy: 'book')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Author $author = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $authorName = null;
 
     #[ORM\ManyToOne(inversedBy: 'book')]
     #[ORM\JoinColumn(nullable: false)]
@@ -97,24 +97,24 @@ class Book
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
@@ -138,14 +138,14 @@ class Book
         return $this;
     }
 
-    public function getAuthor(): ?Author
+    public function getAuthorName(): ?string
     {
-        return $this->author;
+        return $this->authorName;
     }
 
-    public function setAuthor(?Author $author): static
+    public function setAuthorName(string $authorName): self
     {
-        $this->author = $author;
+        $this->authorName = $authorName;
 
         return $this;
     }

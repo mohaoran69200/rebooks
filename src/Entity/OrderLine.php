@@ -17,7 +17,7 @@ class OrderLine
     #[ORM\JoinColumn(nullable: false)]
     private ?Order $command = null;
 
-    #[ORM\OneToOne(inversedBy: 'orderLine', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'orderLine', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Book $book = null;
 

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{ book.title }}{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Modifier le livre</h1>
+
+            {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+            {{ form_row(form.title, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+            {{ form_row(form.description, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+            {{ form_row(form.price, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+            {{ form_row(form.authorName, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+            {{ form_row(form.category, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+
+            <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
+                Modifier
+            </button>
+            {{ form_end(form) }}
+
+            <a href="{{ path('book_show', {'id': book.id}) }}"
+               class="mt-4 block text-blue-500 hover:underline">Annuler</a>
+        </div>
+    </div>
+{% endblock %}

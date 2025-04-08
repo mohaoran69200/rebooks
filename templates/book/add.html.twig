@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Livre{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-4">Ajouter un Livre</h1>
+
+        {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
+
+        <div>
+            <label class="block text-gray-700 font-medium">{{ form_label(form.title) }}</label>
+            {{ form_widget(form.title, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none
+            focus:ring-2 focus:ring-blue-500'}}) }}
+            {{ form_errors(form.title) }}
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-medium">{{ form_label(form.description) }}</label>
+            {{ form_widget(form.description, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-blue-500'}}) }}
+            {{ form_errors(form.description) }}
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-medium">{{ form_label(form.price) }}</label>
+            {{ form_widget(form.price, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none
+            focus:ring-2 focus:ring-blue-500'}}) }}
+            {{ form_errors(form.price) }}
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-medium">{{ form_label(form.authorName) }}</label>
+            {{ form_widget(form.authorName, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none
+            focus:ring-2 focus:ring-blue-500'}}) }}
+            {{ form_errors(form.authorName) }}
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-medium">{{ form_label(form.category) }}</label>
+            {{ form_widget(form.category, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none
+             focus:ring-2 focus:ring-blue-500'}}) }}
+            {{ form_errors(form.category) }}
+        </div>
+
+        <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg
+         hover:bg-blue-600 transition">
+            Ajouter
+        </button>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
