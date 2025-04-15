@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Symfony\Component\Validator\Constraints\Image as ImageConstraint;
 
 class BookFormType extends AbstractType
 {
@@ -33,6 +35,24 @@ class BookFormType extends AbstractType
             ->add('authorName', TextType::class, [
                 'label' => 'Nom de l\'auteur',
                 'required' => true,
+            ])
+            ->add('imageFile', VichFileType::class, [
+                'label' => false,
+                'required' => false,
+                'download_uri' => false,
+                'allow_delete' => false,
+                'constraints' => [
+                    new ImageConstraint([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                            'image/webp'
+                        ],
+                        'mimeTypesMessage' => 'Veuillez uploader une image au format JPEG, PNG, GIF ou WebP.',
+                    ]),
+                ],
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,

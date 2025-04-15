@@ -6,8 +6,11 @@ use App\Repository\BookRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
+#[Vich\Uploadable]
 class Book
 {
     #[ORM\Id]
@@ -24,7 +27,7 @@ class Book
     #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\OneToOne(inversedBy: 'book', cascade: ['persist'])]
+    #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
@@ -34,11 +37,17 @@ class Book
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'book', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'book', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?OrderLine $orderLine = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $authorName = null;
+
+    #[Vich\UploadableField(mapping: 'book_cover', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $imageName = null;
 
     #[ORM\ManyToOne(inversedBy: 'book')]
     #[ORM\JoinColumn(nullable: false)]
@@ -160,5 +169,29 @@ class Book
         $this->category = $category;
 
         return $this;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile !== null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 }

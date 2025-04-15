@@ -48,8 +48,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Book $book = null;
+    /**
+     * @var Collection<int, Book>
+     */
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private Collection $books;
+
 
     /**
      * @var Collection<int, Order>
@@ -88,6 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->addresses = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,22 +218,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBook(): ?Book
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getBooks(): Collection
     {
-        return $this->book;
+        return $this->books;
     }
 
-    public function setBook(Book $book): static
+    public function addBook(Book $book): static
     {
-        // set the owning side of the relation if necessary
-        if ($book->getUser() !== $this) {
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
             $book->setUser($this);
         }
 
-        $this->book = $book;
+        return $this;
+    }
+
+    public function removeBook(Book $book): static
+    {
+        if ($this->books->removeElement($book)) {
+            // set the owning side to null (unless already changed)
+            if ($book->getUser() === $this) {
+                $book->setUser(null);
+            }
+        }
 
         return $this;
     }
+
 
     /**
      * @return Collection<int, Order>

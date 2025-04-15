@@ -3,9 +3,9 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Entity\Book;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class UserProfileService
 {
@@ -20,7 +20,7 @@ class UserProfileService
 
     public function getUserBooks(User $user): array
     {
-        return $this->em->getRepository('App:Book')->findBy(['user' => $user]);
+        return $this->em->getRepository(Book::class)->findBy(['user' => $user]);
     }
 
     public function updateProfile(User $user): void

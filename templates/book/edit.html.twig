@@ -7,16 +7,48 @@
         <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
             <h1 class="text-3xl font-bold text-gray-900 mb-4">Modifier le livre</h1>
 
-            {{ form_start(form, {'attr': {'class': 'space-y-4'}}) }}
-            {{ form_row(form.title, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
-            {{ form_row(form.description, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
-            {{ form_row(form.price, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
-            {{ form_row(form.authorName, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
-            {{ form_row(form.category, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+            {{ form_start(form, {'attr': {'class': 'space-y-4'}, 'enctype': 'multipart/form-data'}) }}
+
+            <div>
+                {{ form_label(form.title, null, {'label_attr': {'class': 'block text-gray-700 font-medium'}}) }}
+                {{ form_widget(form.title, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+
+            <div>
+                {{ form_label(form.description, null, {'label_attr': {'class': 'block text-gray-700 font-medium'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+                {{ form_errors(form.description) }}
+            </div>
+
+            <div>
+                {{ form_label(form.price, null, {'label_attr': {'class': 'block text-gray-700 font-medium'}}) }}
+                {{ form_widget(form.price, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+                {{ form_errors(form.price) }}
+            </div>
+
+            <div>
+                {{ form_label(form.authorName, null, {'label_attr': {'class': 'block text-gray-700 font-medium'}}) }}
+                {{ form_widget(form.authorName, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+                {{ form_errors(form.authorName) }}
+            </div>
+
+            <div>
+                {{ form_label(form.category, null, {'label_attr': {'class': 'block text-gray-700 font-medium'}}) }}
+                {{ form_widget(form.category, {'attr': {'class': 'w-full p-2 border rounded-md'}}) }}
+                {{ form_errors(form.category) }}
+            </div>
+
+            <div>
+                {{ form_label(form.imageName, null, {'label_attr': {'class': 'block text-gray-700 font-medium'}}) }}
+                {{ form_widget(form.imageName, {'attr': {'class': 'w-full text-gray-700'}}) }}
+                {{ form_errors(form.imageName) }}
+            </div>
 
             <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
                 Modifier
             </button>
+
             {{ form_end(form) }}
 
             <a href="{{ path('book_show', {'id': book.id}) }}"

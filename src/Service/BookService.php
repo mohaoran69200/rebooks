@@ -18,6 +18,7 @@ class BookService
         $this->logger = $logger;
     }
 
+
     /**
      * @throws Exception
      */
@@ -26,11 +27,12 @@ class BookService
         try {
             $this->entityManager->persist($book);
             $this->entityManager->flush();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Erreur lors de l\'ajout du livre : ' . $e->getMessage());
-            throw new Exception('Impossible d\'ajouter le livre');
+            throw new \Exception('Impossible d\'ajouter le livre');
         }
     }
+
 
     public function getAllBooks(): array
     {
