@@ -5,22 +5,38 @@ namespace App\Service;
 use App\Entity\User;
 use App\Entity\Book;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class UserProfileService
 {
     private EntityManagerInterface $em;
     private UserPasswordHasherInterface $passwordHasher;
+    private PaginatorInterface $paginator;
 
-    public function __construct(EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
+    public function __construct(EntityManagerInterface $em,
+                                UserPasswordHasherInterface $passwordHasher,
+                                PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->passwordHasher = $passwordHasher;
+        $this->paginator = $paginator;
     }
 
-    public function getUserBooks(User $user): array
+    public function getUserBooks(User $user, $page = 1, $limit = 4): PaginationInterface
     {
-        return $this->em->getRepository(Book::class)->findBy(['user' => $user]);
+        $query = $this->em->getRepository(Book::class)->createQueryBuilder('b')
+            ->where('b.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('b.id', 'DESC')
+            ->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            $limit
+        );
     }
 
     public function updateProfile(User $user): void

@@ -73,7 +73,9 @@ class BookController extends AbstractController
      * @throws Exception
      */
     #[Route('/edit/{id}', name: 'edit')]
-    public function edit(int $id, Request $request, BookService $bookService): Response
+    public function edit(int $id,
+                         Request $request,
+                         BookService $bookService): Response
     {
         $book = $bookService->getBookById($id);
 
@@ -109,7 +111,9 @@ class BookController extends AbstractController
      * @throws Exception
      */
     #[Route('/remove/{id}', name: 'remove', methods: ['POST'])]
-    public function remove(int $id, Request $request, BookService $bookService): Response
+    public function remove(int $id,
+                           Request $request,
+                           BookService $bookService): Response
     {
         // Récupération du livre
         $book = $bookService->getBookById($id);

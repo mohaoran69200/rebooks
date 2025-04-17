@@ -8,7 +8,7 @@
         <div class="container mx-auto px-6">
             <h1 class="text-4xl font-bold">Trouvez, achetez et vendez des livres d'occasion facilement </h1>
             <p class="mt-4 text-lg">Des milliers de livres disponibles à des prix abordables.</p>
-            <a href="#" class="mt-6 inline-block bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
+            <a href="{{ path('book_list') }}" class="mt-6 inline-block bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
                 Explorer les livres
             </a>
 
@@ -29,46 +29,32 @@
 
         {% if books is not empty %}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {% for book in books %}
+                {% for book in latestBooks %}
                     <div class="bg-white shadow-lg rounded-xl p-4 flex flex-col gap-4">
-                        <!-- Couverture -->
-                        <div class="w-full flex justify-center">
-                            <div class="w-32 h-48 overflow-hidden rounded-xl shadow-md">
-                                <img src="{{ asset('uploads/book_covers/' ~ book.imageName) }}"
-                                     alt="Image de couverture"
-                                     class="w-full h-full object-cover object-center">
-                            </div>
-                        </div>
-
-                        <!-- Infos -->
-                        <div class="flex flex-col gap-2">
-                            <h2 class="text-lg font-bold text-gray-800 line-clamp-2">{{ book.title }}</h2>
-                            <p class="text-gray-600 text-sm"><span class="font-semibold">Auteur :</span> {{ book.authorName }}</p>
-                            <p class="text-green-700 text-lg font-semibold">{{ book.price }} €</p>
-                        </div>
-
-                        <!-- Bouton -->
-                        <div class="mt-auto">
-                            <a href="{{ path('book_show', { id: book.id }) }}"
-                               class="block w-full bg-blue-500 text-white text-center py-2 rounded-lg hover:bg-blue-600 transition">
-                                Voir plus
-                            </a>
-                        </div>
+                        {% include '_partials/_cardBook.html.twig' with {'book': book} %}
                     </div>
                 {% endfor %}
             </div>
         {% else %}
             <p class="text-center text-gray-500">Aucun livre disponible pour le moment.</p>
         {% endif %}
+        <!-- Section des livres avec pagination -->
+        <h1 class="text-3xl font-bold mb-8 text-center mt-16">Livres disponibles</h1>
+
+        {% if books is not empty %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {% for book in books %}
+                    <div class="bg-white shadow-lg rounded-xl p-4 flex flex-col gap-4">
+                        {% include '_partials/_cardBook.html.twig' with {'book': book} %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination Include -->
+            {% include '_partials/_pagination_tailwind.html.twig' with {'books': books} %}
+        {% else %}
+            <p class="text-center text-gray-500">Aucun livre disponible pour le moment.</p>
+        {% endif %}
     </div>
 
-        <!-- CTA VENDEURS -->
-        <section class="bg-gray-100 py-12 text-center">
-            <h2 class="text-2xl font-bold text-gray-900">Vendez vos livres en quelques clics !</h2>
-            <p class="mt-2 text-gray-700">Mettez en vente vos livres inutilisés et gagnez de l'argent facilement.</p>
-            <a href="{{ path('book_add') }}" class="mt-4 inline-block bg-green-500 text-white px-6 py-3 rounded-lg
-             font-semibold hover:bg-green-600">
-                Ajouter un livre
-            </a>
-        </section>
 {% endblock %}

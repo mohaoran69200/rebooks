@@ -6,16 +6,21 @@ use App\Entity\Book;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class BookService
 {
     private EntityManagerInterface $entityManager;
     private LoggerInterface $logger;
+    private PaginatorInterface $paginator;
 
-    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger)
+    public function __construct(EntityManagerInterface $entityManager,
+                                LoggerInterface $logger,
+                                PaginatorInterface $paginator)
     {
         $this->entityManager = $entityManager;
         $this->logger = $logger;
+        $this->paginator = $paginator;
     }
 
 
@@ -27,12 +32,24 @@ class BookService
         try {
             $this->entityManager->persist($book);
             $this->entityManager->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error('Erreur lors de l\'ajout du livre : ' . $e->getMessage());
-            throw new \Exception('Impossible d\'ajouter le livre');
+            throw new Exception('Impossible d\'ajouter le livre');
         }
     }
 
+    public function getPaginatedBooks($page = 1, $limit = 12): \Knp\Component\Pager\Pagination\PaginationInterface
+    {
+        $query = $this->entityManager->getRepository(Book::class)->createQueryBuilder('b')
+            ->orderBy('b.id', 'DESC')
+            ->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            $limit
+        );
+    }
 
     public function getAllBooks(): array
     {

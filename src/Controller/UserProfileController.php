@@ -82,7 +82,9 @@ class UserProfileController extends AbstractController
     }
 
     #[Route('/supprimer', name: 'delete', methods: ['POST'])]
-    public function deleteAccount(UserProfileService $profileService, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
+    public function deleteAccount(UserProfileService $profileService,
+                                  TokenStorageInterface $tokenStorage,
+                                  SessionInterface $session): Response
     {
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
