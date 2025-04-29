@@ -1,34 +1,38 @@
-<nav class="mt-4 flex justify-center">
-    <ul class="inline-flex -space-x-px text-sm">
-        {% if pagination.hasPreviousPage %}
-            <li>
-                <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({(pagination.pageParameterName): pagination.previousPage})) }}"
-                   class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
-                    Précédent
-                </a>
-            </li>
-        {% endif %}
-
-        {% for page in pagination.pagesInRange %}
-            <li>
-                {% if page == pagination.currentPage %}
-                    <span class="px-3 py-2 leading-tight text-blue-600 bg-blue-50 border border-blue-300">{{ page }}</span>
-                {% else %}
-                    <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({(pagination.pageParameterName): page})) }}"
-                       class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-                        {{ page }}
-                    </a>
+{% if books is defined %}
+    <div class="pagination mt-6">
+        <nav aria-label="Pagination navigation">
+            <ul class="flex items-center justify-center space-x-4">
+                {# Lien vers la première page (affiché uniquement si ce n'est pas la première page) #}
+                {% if books.getCurrentPageNumber() > 1 %}
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': 1})) }}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition">« Première</a>
+                    </li>
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': books.getCurrentPageNumber() - 1})) }}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition">‹ Précédente</a>
+                    </li>
                 {% endif %}
-            </li>
-        {% endfor %}
 
-        {% if pagination.hasNextPage %}
-            <li>
-                <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({(pagination.pageParameterName): pagination.nextPage})) }}"
-                   class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
-                    Suivant
-                </a>
-            </li>
-        {% endif %}
-    </ul>
-</nav>
+                {# Boucle des pages avec un style distinct pour la page active #}
+                {% for page in 1..books.getPageCount() %}
+                    <li>
+                        {% if page == books.getCurrentPageNumber() %}
+                            <span class="px-4 py-2 bg-blue-500 text-white rounded-lg">{{ page }}</span>
+                        {% else %}
+                            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': page})) }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">{{ page }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+
+                {# Lien vers la page suivante (affiché uniquement si ce n'est pas la dernière page) #}
+                {% if books.getCurrentPageNumber() < books.getPageCount() %}
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': books.getCurrentPageNumber() + 1})) }}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition">Suivante ›</a>
+                    </li>
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge({'page': books.getPageCount()})) }}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition">Dernière »</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endif %}

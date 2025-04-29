@@ -13,5 +13,8 @@
                 <p class="col-span-4 text-center text-gray-500">Aucun livre trouvé.</p>
             {% endfor %}
         </div>
+
+        {# Ajout de la pagination en bas de la liste #}
+        {% include '_partials/_pagination_tailwind.html.twig' with {'books': books} %}
     </div>
 {% endblock %}

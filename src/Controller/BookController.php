@@ -47,14 +47,16 @@ class BookController extends AbstractController
 
 
     #[Route('/list', name: 'list')]
-    public function list(BookService $bookService): Response
+    public function list(BookService $bookService, Request $request): Response
     {
-        $books = $bookService->getAllBooks();
+        $page = $request->query->getInt('page', 1); // Page actuelle (par défaut 1)
+        $books = $bookService->getPaginatedBooks($page, 12); // 12 livres par page
 
         return $this->render('book/list.html.twig', [
-            'books' => $books,
+            'books' => $books, // L'objet de pagination complet
         ]);
     }
+
 
     /**
      * @throws Exception
